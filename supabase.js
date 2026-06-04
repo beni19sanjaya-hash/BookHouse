@@ -33,6 +33,18 @@ async function sbSignOut() {
   return { error };
 }
 
+async function sbResetPassword(email, redirectUrl) {
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: redirectUrl,
+  });
+  return { error };
+}
+
+async function sbUpdatePassword(newPassword) {
+  const { error } = await sb.auth.updateUser({ password: newPassword });
+  return { error };
+}
+
 async function sbGetSession() {
   const { data } = await sb.auth.getSession();
   return data.session;
