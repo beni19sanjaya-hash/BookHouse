@@ -60,7 +60,7 @@
             <div class="form-group">
               <label class="form-label" for="userPassword">
                 Password
-                <a href="#" class="forgot-link">Lupa password?</a>
+                <a href="#" class="forgot-link" id="forgotPasswordLink">Lupa password?</a>
               </label>
               <div class="input-wrapper">
                 <span class="input-icon">
@@ -181,6 +181,43 @@
       </div>
     </div>
   </div>
+
+  <!-- ========== MODAL LUPA PASSWORD ========== -->
+  <div class="modal-overlay hidden" id="forgotModal">
+    <div class="modal modal-sm" id="forgotModalBox">
+      <button class="modal-close" id="closeForgotModal" aria-label="Tutup">✕</button>
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <div style="font-size:2.5rem; margin-bottom:.8rem;">🔑</div>
+        <h2 style="font-size:1.3rem; font-weight:800; color:var(--text-100); margin-bottom:.4rem;">Lupa Password?</h2>
+        <p style="font-size:.875rem; color:var(--text-300);">Masukkan email kamu dan kami akan kirim link untuk reset password.</p>
+      </div>
+      <div class="form-group" id="forgotFormGroup">
+        <label class="form-label" for="forgotEmail">Email</label>
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <path d="M3 4h14a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V5a1 1 0 011-1zm7 6.5l6-4H4l6 4z" fill="currentColor"/>
+            </svg>
+          </span>
+          <input type="email" id="forgotEmail" class="form-input" placeholder="nama@email.com" />
+        </div>
+        <span class="form-error" id="forgotEmailErr"></span>
+      </div>
+      <!-- Success state (tersembunyi dulu) -->
+      <div id="forgotSuccess" class="hidden" style="text-align:center; padding:1rem 0;">
+        <div style="font-size:2.5rem; margin-bottom:.8rem;">📬</div>
+        <p style="font-size:.9rem; color:var(--green); font-weight:600; margin-bottom:.4rem;">Email berhasil dikirim!</p>
+        <p style="font-size:.82rem; color:var(--text-300);">Cek inbox email kamu dan klik link reset password. Jangan lupa cek folder spam.</p>
+      </div>
+      <button class="btn btn-primary btn-full" id="sendResetBtn" style="margin-top:1.2rem;">
+        <span class="btn-text">Kirim Link Reset</span>
+        <span class="btn-loader hidden"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== TOAST ========== -->
+  <div class="toast-container" id="toastContainer"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
