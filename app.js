@@ -152,6 +152,62 @@ function initLogin() {
     });
   }
 
+  // Lupa Password Modal
+  const forgotLink = document.getElementById('forgotPasswordLink');
+  const forgotModal = document.getElementById('forgotModal');
+  const closeForgotModal = document.getElementById('closeForgotModal');
+  const sendResetBtn = document.getElementById('sendResetBtn');
+
+  forgotLink?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('forgotEmail').value = '';
+    document.getElementById('forgotEmailErr').textContent = '';
+    document.getElementById('forgotFormGroup').classList.remove('hidden');
+    document.getElementById('forgotSuccess').classList.add('hidden');
+    sendResetBtn.classList.remove('hidden');
+    forgotModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  });
+
+  closeForgotModal?.addEventListener('click', () => {
+    forgotModal.classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+
+  forgotModal?.addEventListener('click', (e) => {
+    if (e.target.id === 'forgotModal') {
+      forgotModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  });
+
+  sendResetBtn?.addEventListener('click', async () => {
+    const email = document.getElementById('forgotEmail').value.trim();
+    const errEl = document.getElementById('forgotEmailErr');
+    errEl.textContent = '';
+
+    if (!email) { errEl.textContent = 'Email wajib diisi'; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'Format email tidak valid'; return; }
+
+    setLoading(sendResetBtn, true);
+
+    // URL redirect ke halaman reset — sesuaikan dengan URL GitHub Pages kamu
+    const redirectUrl = window.location.origin + window.location.pathname.replace('login.html', '') + 'reset-password.html';
+    const { error } = await sbResetPassword(email, redirectUrl);
+
+    setLoading(sendResetBtn, false);
+
+    if (error) {
+      errEl.textContent = 'Gagal mengirim email. Pastikan email terdaftar.';
+      return;
+    }
+
+    // Tampilkan pesan sukses
+    document.getElementById('forgotFormGroup').classList.add('hidden');
+    sendResetBtn.classList.add('hidden');
+    document.getElementById('forgotSuccess').classList.remove('hidden');
+  });
+
   // Admin Login (hardcoded, tidak pakai Supabase Auth)
   const loginAdminForm = document.getElementById('loginAdminForm');
   if (loginAdminForm) {
