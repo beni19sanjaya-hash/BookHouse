@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiket Peminjaman — BookHouse</title>
+  <meta name="description" content="Tiket peminjaman buku BookHouse. Tunjukkan tiket ini ke kasir perpustakaan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-ticket">
+
+  <div class="ticket-page-wrapper">
+    <!-- Header -->
+    <div class="ticket-page-header">
+      <a href="dashboard.html" class="btn btn-ghost btn-sm">
+        ← Kembali ke Dashboard
+      </a>
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#F97316"/>
+            <path d="M8 8h6v16H8V8zm10 0h6v16h-6V8z" fill="white" opacity="0.9"/>
+            <path d="M8 8h16v3H8V8z" fill="white"/>
+          </svg>
+        </div>
+        <span class="logo-text">Book<span>House</span></span>
+      </a>
+    </div>
+
+    <!-- Success Banner -->
+    <div class="success-banner">
+      <div class="success-icon-wrap">
+        <div class="success-ring"></div>
+        <span class="success-check">✓</span>
+      </div>
+      <h1 class="success-title">Permintaan Berhasil Dikirim!</h1>
+      <p class="success-subtitle">Tiket peminjaman Anda sudah siap. Tunjukkan tiket di bawah ini ke kasir perpustakaan.</p>
+    </div>
+
+    <!-- THE TICKET -->
+    <div class="ticket-wrapper" id="ticketWrapper">
+      <div class="ticket" id="mainTicket">
+        <!-- Ticket Left Side -->
+        <div class="ticket-left">
+          <div class="ticket-logo">
+            <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
+              <rect width="32" height="32" rx="8" fill="#F97316"/>
+              <path d="M8 8h6v16H8V8zm10 0h6v16h-6V8z" fill="white" opacity="0.9"/>
+              <path d="M8 8h16v3H8V8z" fill="white"/>
+            </svg>
+            <div>
+              <div class="ticket-brand">BookHouse</div>
+              <div class="ticket-brand-sub">Perpustakaan Digital</div>
+            </div>
+          </div>
+          <div class="ticket-divider-h"></div>
+
+          <div class="ticket-book-section">
+            <div class="ticket-book-cover" id="ticketBookCover"></div>
+            <div class="ticket-book-details">
+              <p class="ticket-label">JUDUL BUKU</p>
+              <h2 class="ticket-book-title" id="ticketBookTitle">—</h2>
+              <p class="ticket-book-author" id="ticketBookAuthor">—</p>
+              <span class="ticket-category-badge" id="ticketCategory">—</span>
+            </div>
+          </div>
+
+          <div class="ticket-info-grid">
+            <div class="ticket-info-item">
+              <p class="ticket-label">NAMA PEMINJAM</p>
+              <p class="ticket-value" id="ticketName">—</p>
+            </div>
+            <div class="ticket-info-item">
+              <p class="ticket-label">NO. IDENTITAS</p>
+              <p class="ticket-value ticket-mono" id="ticketId">—</p>
+            </div>
+            <div class="ticket-info-item">
+              <p class="ticket-label">TANGGAL PINJAM</p>
+              <p class="ticket-value" id="ticketDate">—</p>
+            </div>
+            <div class="ticket-info-item">
+              <p class="ticket-label">BATAS KEMBALI</p>
+              <p class="ticket-value ticket-deadline" id="ticketDeadline">—</p>
+            </div>
+          </div>
+
+          <div class="ticket-footer-note">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm1 11H9v-4h2v4zm0-6H9V5h2v2z" fill="#F97316"/></svg>
+            Tunjukkan tiket ini kepada kasir perpustakaan untuk mengambil buku.
+          </div>
+        </div>
+
+        <!-- Ticket Tear Line -->
+        <div class="ticket-tear">
+          <div class="tear-circle top"></div>
+          <div class="tear-dashes"></div>
+          <div class="tear-circle bottom"></div>
+        </div>
+
+        <!-- Ticket Right Side (QR / Code) -->
+        <div class="ticket-right">
+          <div class="ticket-number-section">
+            <p class="ticket-label">NO. TIKET</p>
+            <p class="ticket-number" id="ticketNumber">—</p>
+          </div>
+          <div class="ticket-qr-placeholder">
+            <div class="qr-grid" id="qrGrid"></div>
+          </div>
+          <div class="ticket-status">
+            <div class="status-dot active-dot"></div>
+            <span class="status-text">AKTIF</span>
+          </div>
+          <div class="ticket-barcode">
+            <div class="barcode-lines" id="ticketBarcode"></div>
+            <p class="barcode-text" id="barcodeText">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="ticket-actions">
+      <button class="btn btn-primary btn-lg" id="printTicket">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 4V2h10v2H5zm-2 2h14a1 1 0 011 1v7a1 1 0 01-1 1h-2v2H5v-2H3a1 1 0 01-1-1V7a1 1 0 011-1zm2 8h10v-2H5v2zm10-6H5v2h10V8z" fill="currentColor"/></svg>
+        Cetak Tiket
+      </button>
+      <button class="btn btn-outline btn-lg" id="downloadTicket">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 12l-4-4h3V3h2v5h3l-4 4zm-5 4h10v-2H5v2z" fill="currentColor"/></svg>
+        Unduh Tiket
+      </button>
+      <a href="dashboard.html" class="btn btn-ghost btn-lg">
+        Kembali ke Dashboard
+      </a>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions-card">
+      <h3>📋 Instruksi Pengambilan Buku</h3>
+      <ol class="instructions-list">
+        <li>Datang ke perpustakaan selama jam operasional (Senin-Jumat, 08.00-17.00 WIB).</li>
+        <li>Tunjukkan tiket ini (cetak atau di layar HP) kepada petugas kasir.</li>
+        <li>Serahkan foto identitas asli untuk verifikasi.</li>
+        <li>Petugas akan menyiapkan buku yang Anda pesan.</li>
+        <li>Kembalikan buku sebelum batas waktu yang tertera di tiket.</li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

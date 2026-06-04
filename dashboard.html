@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — BookHouse</title>
+  <meta name="description" content="Dashboard user BookHouse — Jelajahi dan pinjam buku favoritmu." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="page-dashboard">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#F97316" />
+            <path d="M8 8h6v16H8V8zm10 0h6v16h-6V8z" fill="white" opacity="0.9" />
+            <path d="M8 8h16v3H8V8z" fill="white" />
+          </svg>
+        </div>
+        <span class="logo-text">Book<span>House</span></span>
+      </a>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Tutup sidebar">✕</button>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebarAvatar">BS</div>
+      <div class="user-info">
+        <p class="user-name" id="sidebarUserName">Budi Santoso</p>
+        <p class="user-role">Member</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link active" id="navDashboard">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M2 2h7v7H2V2zm9 0h7v7h-7V2zm-9 9h7v7H2v-7zm9 0h7v7h-7v-7z" fill="currentColor" />
+        </svg>
+        Dashboard
+      </a>
+      <a href="dashboard.html#explore" class="sidebar-link" id="navExplore">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M9 2a7 7 0 100 14A7 7 0 009 2zm7.32 8.5l2.18 2.18-1.5 1.5-2.18-2.18A9 9 0 0116.32 10.5z"
+            fill="currentColor" />
+        </svg>
+        Jelajahi Buku
+      </a>
+      <a href="dashboard.html#borrows" class="sidebar-link" id="navBorrows">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path
+            d="M4 3h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v10h10V5H5zm1 2h8v2H6V7zm0 4h6v2H6v-2z"
+            fill="currentColor" />
+        </svg>
+        Riwayat Pinjaman
+      </a>
+      <a href="dashboard.html#favourites" class="sidebar-link" id="navFav">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 15l-5.5 3 1.5-6L2 7.5l6.1-.5L10 2l1.9 5 6.1.5-4 4.5 1.5 6z" fill="currentColor" />
+        </svg>
+        Favorit
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button class="sidebar-link sidebar-logout" id="userLogout">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M7 3H3a1 1 0 00-1 1v12a1 1 0 001 1h4v-2H4V5h3V3zm6 11l5-4-5-4v3H7v2h6v3z" fill="currentColor" />
+        </svg>
+        Keluar
+      </button>
+    </div>
+  </aside>
+
+  <!-- ========== OVERLAY ========== -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="search-bar">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M9 2a7 7 0 100 14A7 7 0 009 2zm7.32 8.5l2.18 2.18-1.5 1.5-2.18-2.18A9 9 0 0116.32 10.5z"
+              fill="currentColor" />
+          </svg>
+          <input type="text" id="searchBooks" placeholder="Cari judul atau pengarang..." class="search-input" />
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="category-filter">
+          <select id="categoryFilter" class="select-filter">
+            <option value="">Semua Kategori</option>
+            <option value="Fiksi">Fiksi</option>
+            <option value="Sains">Sains</option>
+            <option value="Bisnis">Bisnis</option>
+            <option value="Psikologi">Psikologi</option>
+            <option value="Sejarah">Sejarah</option>
+            <option value="Teknologi">Teknologi</option>
+            <option value="Filsafat">Filsafat</option>
+          </select>
+        </div>
+        <div class="topbar-notif" id="notifBtn" title="Notifikasi">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 2a7 7 0 00-7 7v4l-2 2v1h18v-1l-2-2V9a7 7 0 00-7-7zm0 18a2 2 0 002-2H9a2 2 0 002 2z"
+              fill="currentColor" />
+          </svg>
+        </div>
+        <div class="topbar-avatar" id="topbarAvatar">BS</div>
+      </div>
+    </header>
+
+    <!-- ===== DASHBOARD HOME ===== -->
+    <div class="dash-section" id="sectionDashboard">
+      <div class="dash-welcome">
+        <div>
+          <h2 class="dash-welcome-title">Selamat datang, <span id="welcomeName">Budi</span>! 👋</h2>
+          <p class="dash-welcome-sub">Temukan buku favoritmu dan mulai meminjam hari ini.</p>
+        </div>
+        <div class="welcome-date" id="welcomeDate"></div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-row">
+        <div class="stat-card stat-blue">
+          <div class="stat-card-icon">📚</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val">10+</span>
+            <span class="stat-card-label">Total Buku</span>
+          </div>
+        </div>
+        <div class="stat-card stat-orange">
+          <div class="stat-card-icon">📖</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val" id="statBorrowCount">0</span>
+            <span class="stat-card-label">Buku Dipinjam</span>
+          </div>
+        </div>
+        <div class="stat-card stat-green">
+          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val" id="statReturnCount">0</span>
+            <span class="stat-card-label">Sudah Kembali</span>
+          </div>
+        </div>
+        <div class="stat-card stat-purple">
+          <div class="stat-card-icon">🎫</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val" id="statTicketCount">0</span>
+            <span class="stat-card-label">Tiket Aktif</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trending & Active Loan -->
+      <div class="dash-two-col">
+        <!-- Trending -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3>📈 Buku Trending</h3>
+            <button class="view-all-btn" onclick="showSection('explore')">Lihat Semua</button>
+          </div>
+          <div class="trending-list" id="trendingList"></div>
+        </div>
+        <!-- Active Borrows -->
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3>📋 Riwayat Peminjaman</h3>
+            <button class="view-all-btn" onclick="showSection('borrows')">Lihat Semua</button>
+          </div>
+          <div class="borrow-list" id="borrowList">
+            <div class="empty-state-sm">
+              <span>📭</span>
+              <p>Belum ada peminjaman</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EXPLORE BOOKS ===== -->
+    <div class="dash-section hidden" id="sectionExplore">
+      <div class="section-title-row">
+        <h2 class="page-title">Jelajahi Koleksi Buku</h2>
+        <span class="book-count-badge" id="bookCountBadge">0 buku</span>
+      </div>
+      <div class="category-tabs" id="categoryTabs">
+        <button class="cat-tab active" data-cat="">Semua</button>
+        <button class="cat-tab" data-cat="Fiksi">Fiksi</button>
+        <button class="cat-tab" data-cat="Sains">Sains</button>
+        <button class="cat-tab" data-cat="Bisnis">Bisnis</button>
+        <button class="cat-tab" data-cat="Psikologi">Psikologi</button>
+        <button class="cat-tab" data-cat="Sejarah">Sejarah</button>
+        <button class="cat-tab" data-cat="Teknologi">Teknologi</button>
+        <button class="cat-tab" data-cat="Filsafat">Filsafat</button>
+      </div>
+      <div class="books-grid-main" id="booksGrid"></div>
+    </div>
+
+    <!-- ===== BORROWS HISTORY ===== -->
+    <div class="dash-section hidden" id="sectionBorrows">
+      <h2 class="page-title">Riwayat Peminjaman</h2>
+      <div class="borrows-table-wrapper">
+        <table class="borrows-table" id="borrowsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Judul Buku</th>
+              <th>Tanggal Pinjam</th>
+              <th>Status</th>
+              <th>Tiket</th>
+            </tr>
+          </thead>
+          <tbody id="borrowsTableBody">
+            <tr>
+              <td colspan="5" class="empty-row">
+                <span>📭 Belum ada riwayat peminjaman</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== FAVOURITES ===== -->
+    <div class="dash-section hidden" id="sectionFavourites">
+      <h2 class="page-title">Buku Favorit</h2>
+      <div class="books-grid-main" id="favGrid">
+        <div class="empty-state">
+          <div class="empty-icon">⭐</div>
+          <h3>Belum ada favorit</h3>
+          <p>Tambahkan buku ke favorit dengan menekan ikon bintang.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========== BOOK DETAIL MODAL ========== -->
+  <div class="modal-overlay hidden" id="bookModal">
+    <div class="modal" id="bookModalBox">
+      <button class="modal-close" id="closeBookModal" aria-label="Tutup">✕</button>
+      <div class="modal-body">
+        <div class="modal-book-cover" id="modalCover"></div>
+        <div class="modal-book-info">
+          <span class="modal-category" id="modalCategory"></span>
+          <h2 class="modal-title" id="modalTitle"></h2>
+          <p class="modal-author" id="modalAuthor"></p>
+          <p class="modal-desc" id="modalDesc"></p>
+          <div class="modal-meta">
+            <span class="modal-stock" id="modalStock"></span>
+            <span class="modal-year" id="modalYear"></span>
+          </div>
+          <div class="modal-stars" id="modalStars"></div>
+          <button class="btn btn-primary btn-lg modal-borrow-btn" id="modalBorrowBtn">
+            🎫 Pinjam Buku Ini
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== BORROW FORM MODAL ========== -->
+  <div class="modal-overlay hidden" id="borrowModal">
+    <div class="modal modal-lg" id="borrowModalBox">
+      <button class="modal-close" id="closeBorrowModal" aria-label="Tutup">✕</button>
+      <div class="borrow-modal-header">
+        <h2>📋 Form Peminjaman Buku</h2>
+        <p>Isi data diri dan upload foto identitas untuk melanjutkan.</p>
+      </div>
+
+      <!-- Steps Indicator -->
+      <div class="borrow-steps">
+        <div class="borrow-step active" id="step1Ind">
+          <div class="step-circle">1</div>
+          <span>Detail Buku</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="borrow-step" id="step2Ind">
+          <div class="step-circle">2</div>
+          <span>Data Diri</span>
+        </div>
+        <div class="step-connector"></div>
+        <div class="borrow-step" id="step3Ind">
+          <div class="step-circle">3</div>
+          <span>Konfirmasi</span>
+        </div>
+      </div>
+
+      <!-- Step 1: Book Info -->
+      <div class="borrow-step-content" id="borrowStep1">
+        <div class="selected-book-info" id="selectedBookInfo"></div>
+        <div class="form-group">
+          <label class="form-label" for="borrowDuration">Durasi Pinjam</label>
+          <select id="borrowDuration" class="form-input select-filter">
+            <option value="3">3 hari</option>
+            <option value="7" selected>7 hari</option>
+            <option value="14">14 hari</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="borrowNotes">Catatan (Opsional)</label>
+          <textarea id="borrowNotes" class="form-input form-textarea" rows="2"
+            placeholder="Catatan tambahan..."></textarea>
+        </div>
+        <div class="borrow-nav">
+          <button class="btn btn-ghost" id="cancelBorrow">Batal</button>
+          <button class="btn btn-primary" id="goStep2">Lanjut →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Personal Data -->
+      <div class="borrow-step-content hidden" id="borrowStep2">
+        <div class="form-group">
+          <label class="form-label" for="borrowFullName">Nama Lengkap</label>
+          <input type="text" id="borrowFullName" class="form-input" placeholder="Nama sesuai KTP" required />
+          <span class="form-error" id="borrowNameErr"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="borrowIdNum">Nomor KTP / Kartu Pelajar</label>
+          <input type="text" id="borrowIdNum" class="form-input" placeholder="3273xxxxxxxxxxxx" required />
+          <span class="form-error" id="borrowIdErr"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="borrowPhone">Nomor HP</label>
+          <input type="tel" id="borrowPhone" class="form-input" placeholder="08123456789" required />
+          <span class="form-error" id="borrowPhoneErr"></span>
+        </div>
+
+        <!-- ID Photo Upload -->
+        <div class="form-group">
+          <label class="form-label">Foto Identitas (KTP / Kartu Pelajar)</label>
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-placeholder" id="uploadPlaceholder">
+              <div class="upload-icon">📷</div>
+              <h4>Upload Foto Identitas</h4>
+              <p>Klik atau drag &amp; drop foto KTP / Kartu Pelajar</p>
+              <p class="upload-hint">Format: JPG, PNG, JPEG — Maks. 5MB</p>
+              <button type="button" class="btn btn-outline btn-sm" id="uploadBtn">Pilih File</button>
+            </div>
+            <div class="upload-preview hidden" id="uploadPreview">
+              <img id="previewImg" alt="Preview Identitas" />
+              <div class="preview-info">
+                <p id="previewName"></p>
+                <button type="button" class="btn btn-outline btn-sm" id="removePhoto">Ganti Foto</button>
+              </div>
+            </div>
+            <input type="file" id="idPhotoInput" accept="image/*" class="hidden" />
+          </div>
+          <span class="form-error" id="uploadErr"></span>
+        </div>
+        <div class="borrow-nav">
+          <button class="btn btn-ghost" id="backStep1">← Kembali</button>
+          <button class="btn btn-primary" id="goStep3">Lanjut →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Confirm -->
+      <div class="borrow-step-content hidden" id="borrowStep3">
+        <div class="confirm-summary" id="confirmSummary"></div>
+        <div class="confirm-notice">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm1 11H9v-4h2v4zm0-6H9V5h2v2z" fill="#F97316" />
+          </svg>
+          <p>Dengan mengklik <strong>Kirim Permintaan</strong>, Anda setuju bahwa data yang diberikan adalah benar dan
+            Anda akan mengambil buku ke kasir perpustakaan dengan menunjukkan tiket yang diberikan.</p>
+        </div>
+        <div class="borrow-nav">
+          <button class="btn btn-ghost" id="backStep2">← Kembali</button>
+          <button class="btn btn-primary btn-lg" id="submitBorrow">
+            <span class="btn-text">🎫 Kirim Permintaan</span>
+            <span class="btn-loader hidden"></span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========== TOAST NOTIFICATION ========== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

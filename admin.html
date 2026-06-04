@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — BookHouse</title>
+  <meta name="description" content="Panel administrasi BookHouse — kelola buku, stok, dan peminjaman." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-admin">
+
+  <!-- ========== ADMIN SIDEBAR ========== -->
+  <aside class="sidebar admin-sidebar" id="adminSidebar">
+    <div class="sidebar-header">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#F97316"/>
+            <path d="M8 8h6v16H8V8zm10 0h6v16h-6V8z" fill="white" opacity="0.9"/>
+            <path d="M8 8h16v3H8V8z" fill="white"/>
+          </svg>
+        </div>
+        <span class="logo-text">Book<span>House</span></span>
+      </a>
+      <button class="sidebar-close" id="adminSidebarClose">✕</button>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar admin-avatar">AD</div>
+      <div class="user-info">
+        <p class="user-name">Administrator</p>
+        <p class="user-role admin-role">🛡️ Admin</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="sidebar-link active" data-admin-section="overview" id="adminNavOverview">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 2h7v7H2V2zm9 0h7v7h-7V2zm-9 9h7v7H2v-7zm9 0h7v7h-7v-7z" fill="currentColor"/></svg>
+        Overview
+      </a>
+      <a href="#" class="sidebar-link" data-admin-section="books" id="adminNavBooks">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 3h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v10h10V5H5zm1 2h8v2H6V7zm0 4h6v2H6v-2z" fill="currentColor"/></svg>
+        Kelola Buku
+      </a>
+      <a href="#" class="sidebar-link" data-admin-section="categories" id="adminNavCats">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 4h6v6H2V4zm10 0h6v6h-6V4zm-10 8h6v4H2v-4zm10 0h6v4h-6v-4z" fill="currentColor"/></svg>
+        Kategori Buku
+      </a>
+      <a href="#" class="sidebar-link" data-admin-section="borrows" id="adminNavBorrows">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17 4H3L2 9h1v7h14V9h1l-1-5zm-3 10H6v-4h8v4zM4 9h12l.5-3H3.5L4 9z" fill="currentColor"/></svg>
+        Data Peminjaman
+      </a>
+      <a href="#" class="sidebar-link" data-admin-section="users" id="adminNavUsers">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M9 2a4 4 0 100 8 4 4 0 000-8zm-5 13a5 5 0 0110 0H4zm11-9a3 3 0 110 6 3 3 0 010-6zm2 9h3v-1a3 3 0 00-3-3v4z" fill="currentColor"/></svg>
+        Data User
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button class="sidebar-link sidebar-logout" id="adminLogout">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 3H3a1 1 0 00-1 1v12a1 1 0 001 1h4v-2H4V5h3V3zm6 11l5-4-5-4v3H7v2h6v3z" fill="currentColor"/></svg>
+        Keluar
+      </button>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="adminOverlay"></div>
+
+  <!-- ========== ADMIN MAIN ========== -->
+  <main class="main-content" id="adminMain">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="adminHamburger">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="topbar-title-area">
+          <h1 class="topbar-page-title" id="adminPageTitle">Overview</h1>
+          <span class="topbar-breadcrumb">Admin Panel</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="admin-badge-chip">🛡️ Admin Mode</span>
+        <div class="user-avatar admin-avatar" style="width:36px;height:36px;font-size:14px;">AD</div>
+      </div>
+    </header>
+
+    <!-- ===== OVERVIEW ===== -->
+    <div class="admin-section" id="adminSectionOverview">
+      <div class="stats-row">
+        <div class="stat-card stat-blue">
+          <div class="stat-card-icon">📚</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val" id="adminStatBooks">0</span>
+            <span class="stat-card-label">Total Judul Buku</span>
+          </div>
+        </div>
+        <div class="stat-card stat-orange">
+          <div class="stat-card-icon">📖</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val" id="adminStatBorrows">0</span>
+            <span class="stat-card-label">Sedang Dipinjam</span>
+          </div>
+        </div>
+        <div class="stat-card stat-green">
+          <div class="stat-card-icon">👥</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val" id="adminStatUsers">0</span>
+            <span class="stat-card-label">Total User</span>
+          </div>
+        </div>
+        <div class="stat-card stat-purple">
+          <div class="stat-card-icon">🗂️</div>
+          <div class="stat-card-info">
+            <span class="stat-card-val" id="adminStatCats">0</span>
+            <span class="stat-card-label">Kategori</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="dash-two-col">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3>🕒 Peminjaman Terbaru</h3>
+            <button class="view-all-btn" onclick="adminShowSection('borrows')">Lihat Semua</button>
+          </div>
+          <div class="borrow-list" id="adminRecentBorrows">
+            <div class="empty-state-sm"><span>📭</span><p>Belum ada data</p></div>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <h3>📉 Stok Menipis</h3>
+            <button class="view-all-btn" onclick="adminShowSection('books')">Kelola Stok</button>
+          </div>
+          <div class="borrow-list" id="adminLowStock">
+            <div class="empty-state-sm"><span>✅</span><p>Semua stok aman</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BOOKS MANAGEMENT ===== -->
+    <div class="admin-section hidden" id="adminSectionBooks">
+      <div class="section-title-row">
+        <h2 class="page-title">Kelola Buku</h2>
+        <button class="btn btn-primary" id="openAddBookModal">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4z" fill="currentColor"/></svg>
+          Tambah Buku
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="admin-filters">
+        <div class="search-bar admin-search">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M9 2a7 7 0 100 14A7 7 0 009 2zm7.32 8.5l2.18 2.18-1.5 1.5-2.18-2.18A9 9 0 0116.32 10.5z" fill="currentColor"/></svg>
+          <input type="text" id="adminSearchBook" placeholder="Cari buku..." class="search-input" />
+        </div>
+        <select id="adminFilterCat" class="form-input select-filter" style="width:auto;min-width:160px">
+          <option value="">Semua Kategori</option>
+        </select>
+      </div>
+
+      <!-- Books Table -->
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="adminBooksTable">
+          <thead>
+            <tr>
+              <th>Cover</th>
+              <th>Judul & Pengarang</th>
+              <th>Kategori</th>
+              <th>Tahun</th>
+              <th>Stok</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="adminBooksBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORIES MANAGEMENT ===== -->
+    <div class="admin-section hidden" id="adminSectionCategories">
+      <div class="section-title-row">
+        <h2 class="page-title">Kelola Kategori</h2>
+        <button class="btn btn-primary" id="openAddCatModal">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M11 9V5H9v4H5v2h4v4h2v-4h4V9h-4z" fill="currentColor"/></svg>
+          Tambah Kategori
+        </button>
+      </div>
+      <div class="categories-grid" id="categoriesGrid"></div>
+    </div>
+
+    <!-- ===== BORROWS MANAGEMENT ===== -->
+    <div class="admin-section hidden" id="adminSectionBorrows">
+      <h2 class="page-title">Data Peminjaman</h2>
+      <div class="admin-filters">
+        <select id="adminBorrowFilter" class="form-input select-filter" style="width:auto;min-width:160px">
+          <option value="">Semua Status</option>
+          <option value="pending">Pending</option>
+          <option value="active">Aktif</option>
+          <option value="returned">Dikembalikan</option>
+        </select>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="adminBorrowsTable">
+          <thead>
+            <tr>
+              <th>No. Tiket</th>
+              <th>Nama Peminjam</th>
+              <th>Buku</th>
+              <th>Tgl. Pinjam</th>
+              <th>Batas Kembali</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="adminBorrowsBody">
+            <tr><td colspan="7" class="empty-row"><span>📭 Belum ada data peminjaman</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== USERS MANAGEMENT ===== -->
+    <div class="admin-section hidden" id="adminSectionUsers">
+      <h2 class="page-title">Data User</h2>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="adminUsersTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama</th>
+              <th>Telepon</th>
+              <th>Alamat</th>
+              <th>Tgl. Daftar</th>
+              <th>Total Pinjaman</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="adminUsersBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========== ADD / EDIT BOOK MODAL ========== -->
+  <div class="modal-overlay hidden" id="bookFormModal">
+    <div class="modal modal-lg" id="bookFormBox">
+      <button class="modal-close" id="closeBookForm">✕</button>
+      <h2 class="modal-form-title" id="bookFormTitle">Tambah Buku Baru</h2>
+      <form class="auth-form" id="bookForm" novalidate>
+        <input type="hidden" id="editBookId" />
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="bookTitle">Judul Buku *</label>
+            <input type="text" id="bookTitle" class="form-input" placeholder="Judul buku" required />
+            <span class="form-error" id="bookTitleErr"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookAuthor">Pengarang *</label>
+            <input type="text" id="bookAuthor" class="form-input" placeholder="Nama pengarang" required />
+            <span class="form-error" id="bookAuthorErr"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="bookCategory">Kategori *</label>
+            <select id="bookCategory" class="form-input select-filter" required>
+              <option value="">Pilih kategori</option>
+            </select>
+            <span class="form-error" id="bookCatErr"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookYear">Tahun Terbit</label>
+            <input type="number" id="bookYear" class="form-input" placeholder="2024" min="1900" max="2099" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="bookStock">Stok Buku *</label>
+            <input type="number" id="bookStock" class="form-input" placeholder="10" min="0" required />
+            <span class="form-error" id="bookStockErr"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bookPublisher">Penerbit</label>
+            <input type="text" id="bookPublisher" class="form-input" placeholder="Nama penerbit" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="bookDesc">Deskripsi Buku</label>
+          <textarea id="bookDesc" class="form-input form-textarea" rows="3" placeholder="Deskripsi singkat tentang buku..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Upload Cover Buku (Opsional)</label>
+          <div class="upload-area" id="adminUploadArea" style="min-height:120px; border:1.5px dashed rgba(255,255,255,.2); border-radius:12px; display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; position:relative; background:rgba(255,255,255,.02);">
+            <div id="adminUploadPlaceholder" style="text-align:center; padding:1rem;">
+              <div style="font-size:2rem; margin-bottom:.5rem;">📷</div>
+              <div style="font-size:.85rem; color:var(--text-300);">Klik atau drop gambar ke sini</div>
+            </div>
+            <div id="adminUploadPreview" class="hidden" style="position:absolute; inset:0; width:100%; height:100%;">
+              <img id="adminPreviewImg" src="" style="width:100%; height:100%; object-fit:contain; background:rgba(0,0,0,.5);" />
+              <button type="button" id="adminRemovePhoto" style="position:absolute; top:8px; right:8px; background:rgba(244,63,94,.9); color:white; border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:.9rem;">✕</button>
+            </div>
+          </div>
+          <input type="file" id="adminCoverInput" accept="image/*" class="hidden" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Warna Cover Buku</label>
+          <div class="color-options" id="colorOptions">
+            <button type="button" class="color-opt active" data-color="linear-gradient(135deg,#6366f1,#8b5cf6)" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)"></button>
+            <button type="button" class="color-opt" data-color="linear-gradient(135deg,#f97316,#dc2626)" style="background:linear-gradient(135deg,#f97316,#dc2626)"></button>
+            <button type="button" class="color-opt" data-color="linear-gradient(135deg,#10b981,#0891b2)" style="background:linear-gradient(135deg,#10b981,#0891b2)"></button>
+            <button type="button" class="color-opt" data-color="linear-gradient(135deg,#f43f5e,#9333ea)" style="background:linear-gradient(135deg,#f43f5e,#9333ea)"></button>
+            <button type="button" class="color-opt" data-color="linear-gradient(135deg,#0ea5e9,#6366f1)" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)"></button>
+            <button type="button" class="color-opt" data-color="linear-gradient(135deg,#fbbf24,#f97316)" style="background:linear-gradient(135deg,#fbbf24,#f97316)"></button>
+          </div>
+          <input type="hidden" id="bookColor" value="linear-gradient(135deg,#6366f1,#8b5cf6)" />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="cancelBookForm">Batal</button>
+          <button type="submit" class="btn btn-primary" id="saveBookBtn">
+            <span class="btn-text">Simpan Buku</span>
+            <span class="btn-loader hidden"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== ADD CATEGORY MODAL ========== -->
+  <div class="modal-overlay hidden" id="catFormModal">
+    <div class="modal" id="catFormBox">
+      <button class="modal-close" id="closeCatForm">✕</button>
+      <h2 class="modal-form-title" id="catFormTitle">Tambah Kategori</h2>
+      <form class="auth-form" id="catForm" novalidate>
+        <input type="hidden" id="editCatId" />
+        <div class="form-group">
+          <label class="form-label" for="catName">Nama Kategori *</label>
+          <input type="text" id="catName" class="form-input" placeholder="Contoh: Sains" required />
+          <span class="form-error" id="catNameErr"></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="catDesc">Deskripsi</label>
+          <textarea id="catDesc" class="form-input form-textarea" rows="2" placeholder="Deskripsi singkat kategori..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Warna Kategori</label>
+          <div class="color-options" id="catColorOptions">
+            <button type="button" class="color-opt active" data-color="#6366f1" style="background:#6366f1"></button>
+            <button type="button" class="color-opt" data-color="#f97316" style="background:#f97316"></button>
+            <button type="button" class="color-opt" data-color="#10b981" style="background:#10b981"></button>
+            <button type="button" class="color-opt" data-color="#f43f5e" style="background:#f43f5e"></button>
+            <button type="button" class="color-opt" data-color="#0ea5e9" style="background:#0ea5e9"></button>
+            <button type="button" class="color-opt" data-color="#8b5cf6" style="background:#8b5cf6"></button>
+          </div>
+          <input type="hidden" id="catColor" value="#6366f1" />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="cancelCatForm">Batal</button>
+          <button type="submit" class="btn btn-primary">
+            <span class="btn-text">Simpan Kategori</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== DELETE CONFIRM MODAL ========== -->
+  <div class="modal-overlay hidden" id="deleteModal">
+    <div class="modal modal-sm" id="deleteModalBox">
+      <div class="delete-modal-content">
+        <div class="delete-icon">🗑️</div>
+        <h3 id="deleteModalTitle">Hapus Item?</h3>
+        <p id="deleteModalMsg">Tindakan ini tidak dapat dibatalkan.</p>
+        <div class="form-actions">
+          <button class="btn btn-ghost" id="cancelDelete">Batal</button>
+          <button class="btn btn-danger" id="confirmDelete">Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TOAST ========== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
